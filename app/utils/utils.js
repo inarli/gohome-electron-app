@@ -6,10 +6,10 @@ const semver    = require('semver');
 const config    = require('../config.json');
 const {dialog, shell} = require('electron');
 
-let defaultIcon = 'app/resources/icons/home.png';
-let orangeIcon = 'app/resources/icons/home_orange.png';
-let greenIcon = 'app/resources/icons/home_green.png';
-let redIcon = 'app/resources/icons/home_red.png';
+let defaultIcon = __dirname+'/../resources/icons/home.png';
+let orangeIcon = __dirname+'/../resources/icons/home_orange.png';
+let greenIcon = __dirname+'/../resources/icons/home_green.png';
+let redIcon = __dirname+'/../resources/icons/home_red.png';
 let mb = null;
 
 function setIcon(delay) {
@@ -28,7 +28,7 @@ if (mb === null) {
         index: 'file://'+__dirname+'/../main/index.html',
         icon: defaultIcon,
         width: 250,
-        height: 365,
+        height: 375,
         resizable: false,
         showDockIcon: false,
         preloadWindow: true

@@ -7,6 +7,9 @@
 	<title>temps</title>
 	<link rel="stylesheet" href="../resources/css/style.css">
 	<link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+	<script>
+        const ipc = require('electron').ipcRenderer;
+	</script>
 
 </head>
 
@@ -29,7 +32,7 @@
 				<label for="apikey">API Key</label>
 				<input type="text" name="apikey" id="apikey" value="" />
 				<span class="help">
-                        You need a free api key from <a href="https://developers.google.com/maps/documentation/javascript/distancematrix" alt="google " target="_blank">Google Maps (get a key)</a>.
+                        You need a free api key from <a onClick="ipc.send('openlink', 'https://developers.google.com/maps/documentation/javascript/distancematrix')" alt="google " target="_blank">Google Maps (get a key)</a>.
                     </span>
 			</div>
 			<div class="form-item small clear">
