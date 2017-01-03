@@ -28,9 +28,9 @@ if (mb === null) {
         index: 'file://'+__dirname+'/../main/index.html',
         icon: defaultIcon,
         width: 250,
-        height: 375,
+        height: 385,
         resizable: false,
-        showDockIcon: false,
+        showDockIcon: true,
         preloadWindow: true
     });
 }
@@ -47,7 +47,6 @@ function init() {
             if (data.language !== undefined) {
                 language = data.language;
             }
-            mb.tray.setTitle('Waiting google maps api');
             let requestUrl 	= 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metrics&mode=driving&departure_time=now&language='+language+'&origins='+data.location1+'&destinations='+data.location2+'&key='+data.apiKey;
             unirest.get(requestUrl).send().end((response) => {
                 let mapObj = response.body;
@@ -66,10 +65,14 @@ function init() {
     })
 }
 exports.autoUpdater = ()=>{
-    let jsonfile = 'https://raw.githubusercontent.com/inarli/gohome/master/package.json';
-    unirest.get(jsonfile).send().end((response)=>{
-        let json = JSON.parse(response.body);
-        let newVersion = json.version;
+    let jsonfile = 'https://api.github.com/repos/inarli/gohome/releases';
+    unirest.get(jsonfile).headers({
+        'Accept': 'application/json',
+        'User-Agent': 'Go Home Desktop App'
+    }).send().end((response)=>{
+        let json = response.body;
+        let lastRelease = json[0];
+        let newVersion = lastRelease.tag_name;
         if (semver.gt(newVersion, config.version)) {
             const confirm = dialog.showMessageBox({
                 type:'info',
@@ -78,10 +81,25 @@ exports.autoUpdater = ()=>{
                 buttons:['Yes','No']
             });
             if (confirm === 0) {
-                shell.openExternal(config.downloadPage)
+                shell.openExternal(lastRelease.assets[0].browser_download_url);
             }
         }
     });
 
 }
+
+function refresh() {
+    jsonStorage.get('homeway', (err,data) => {
+        let refreshmin = (1000 * 60 * 10);
+        if (data.refreshmin !== undefined){
+            refreshmin = (1000 * 60 * data.refreshmin);
+        }
+        setInterval(()=>{
+            init()
+        }, refreshmin)
+    })
+}
+
+
 exports.init = init;
+exports.refresh = refresh;

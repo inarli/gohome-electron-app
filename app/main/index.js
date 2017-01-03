@@ -42,6 +42,7 @@ ipcMain.on('openlink', (event,arg) => {
 })
 ipcMain.on('init', () => {
     utils.init();
+    utils.refresh();
 })
 ipcMain.on('auto-launch-open', ()=>{
     appLauncher.enable();
@@ -52,7 +53,7 @@ ipcMain.on('auto-launch-close', ()=>{
 
 app.on('ready', () => {
     utils.init();
-    menu.setApplicationMenu(menu.buildFromTemplate(template));
-    setInterval(()=>{utils.init()},(1000 * 60 * 10))
+    utils.refresh();
     utils.autoUpdater();
+    menu.setApplicationMenu(menu.buildFromTemplate(template));
 });
