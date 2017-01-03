@@ -5,7 +5,7 @@
 <img width="303" alt="ekran resmi 2017-01-02 11 30 39" src="https://cloud.githubusercontent.com/assets/1387333/21586187/9711e7bc-d0d6-11e6-9f79-35d38c392dce.png">
 
 
-### Download macOS app
+### Download
 https://github.com/inarli/gohome/releases/latest
 
 ## Dev
