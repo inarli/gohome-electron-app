@@ -1,6 +1,7 @@
 'use strict';
 const electron = require('electron');
 const utils = require('../utils/utils')
+const isOnline = require('is-online');
 const app = electron.app;
 const ipcMain = electron.ipcMain;
 const menu = electron.Menu;
@@ -52,8 +53,7 @@ ipcMain.on('auto-launch-close', ()=>{
 })
 
 app.on('ready', () => {
-    utils.init();
-    utils.refresh();
-    utils.autoUpdater();
-    menu.setApplicationMenu(menu.buildFromTemplate(template));
+  utils.init();
+  utils.autoUpdater();
+  menu.setApplicationMenu(menu.buildFromTemplate(template));
 });
